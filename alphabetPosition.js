@@ -16,4 +16,23 @@ function alphabetPosition(text) {
   return text;
 }
 
-alphabetPosition("aBz");
+//an alternative refactored one line solution
+function refactoredAlphabetPosition(text) {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+  return (
+    text
+      //converst the string to lowercase
+      .toLowerCase()
+      // use regex to remove everything that is not a-z lowercase
+      .replace(/[^a-z]/g, "")
+      //use split to turn the text into an array so that we can use higher order function like map
+      .split("")
+      //map remain values to a new array of the index plus one to reflect alphabet positio
+      .map((x) => alphabet.indexOf(x) + 1)
+      // convert to a string joined by spaces
+      .join(" ")
+  );
+}
+
+console.log(refactoredAlphabetPosition("aBc D"));
