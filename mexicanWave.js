@@ -27,14 +27,18 @@ function wave(str) {
       .filter((item) => item.search(/[A-Z]/) != -1)
   );
 }
-// a refactored version using ellipses to create to deconstruct to array 
-  return [...str]
-    .map(
-      (letter, index) =>
-        str.slice(0, index) + letter.toUpperCase() + str.slice(index + 1)
-    )
-    //filtering so that the items published do not match the original string which is lowercase
-    .filter((item) => item != str);
+
+function refactoredWave(str) {
+  // a refactored version using ellipses to create to deconstruct to array
+  return (
+    [...str]
+      .map(
+        (letter, index) =>
+          str.slice(0, index) + letter.toUpperCase() + str.slice(index + 1)
+      )
+      //filtering so that the items published do not match the original string which is
+      .filter((item) => item != str)
+  );
 }
 console.log(wave("hello world"));
 
