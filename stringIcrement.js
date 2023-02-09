@@ -12,8 +12,6 @@ function incrementString(strng) {
     let num = String(Number(original) + 1);
     let end =
       original.length > num.length ? num.padStart(original.length, "0") : num;
-    console.log("this is end", end);
-
     return strng.slice(0, position).concat(end);
   }
 }
@@ -27,3 +25,11 @@ console.log(incrementString("foo0042"));
 console.log(incrementString("foo9"));
 
 console.log(incrementString("foo099"));
+
+//refactored using regex for a number with a possible 9 after it at the end of the text string
+
+function refactoredIncrementString(strng) {
+  return strng.replace(/[0-8]?9*$/, (value) => String(++value));
+}
+
+console.log(refactoredIncrementString("foo099"));
