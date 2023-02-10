@@ -10,8 +10,6 @@
 // * With input C  => return  246
 
 function ipsBetween(start, end) {
-  //TODO
-
   const e = end.split(".");
   const s = start.split(".");
   return e
@@ -21,4 +19,16 @@ function ipsBetween(start, end) {
     .reduce((a, b) => a + b, 0);
 }
 
-console.log(ipsBetween("10.0.0.255", "10.1.0.0"));
+//refactored for a single line return statement
+function refactoredIpsBetween(start, end) {
+  return end
+    .split(".")
+    .map(
+      (item, index) =>
+        (item - start.split(".")[index]) *
+        Math.pow(256, end.split(".").length - index - 1)
+    )
+    .reduce((a, b) => a + b, 0);
+}
+
+console.log(refactoredIpsBetween("10.0.0.255", "10.1.0.0"));
