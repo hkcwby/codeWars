@@ -16,3 +16,9 @@ alphanumeric("Mazinkaiser");
 alphanumeric("hello world_");
 alphanumeric("PassW0rd");
 alphanumeric("     ");
+
+//refactored using RegExpObject.test(string)
+
+function refactoredAlphanumeric(string) {
+  return /^[a-zA-Z0-9]+$/.test(string);
+}
