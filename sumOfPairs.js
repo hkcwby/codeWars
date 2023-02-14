@@ -21,27 +21,17 @@
 //   return output[2] < ints.length ? output.slice(0, 2) : undefined;
 // }
 
-function sumPairs(ints, s) {
+function recursionSumPairs(ints, s) {
   function helper(range, t, stored) {
-    // console.log("new helper called");
+    //if the latest chain is less than 2 comparable values return the best value stored so far
     if (range.length <= 1) return stored;
     let i = 0;
+
     for (value of range) {
-      console.log("value", value);
-      console.log("t", t);
-      console.log("stored", stored);
-      console.log("range slice", range.slice(i + 1));
-      // console.log(
-      //   "check",
-      //   range.slice(i + 1).find((item) => item == t - value)
-      // );
+      //for each value in the range check the remaining part of the array for a suitable value
       if (!isNaN(range.slice(i + 1).find((item) => item == t - value))) {
-        // console.log(true);
-        // console.log(
-        //   "this is range index",
-        //   range.slice(i + 1, i + 1 + range.slice(i + 1).indexOf(t - value))
-        // );
-        // console.log("this is stored", [value, t - value]);
+        //if suitable value is found return the range between the value and the suitable match and test in that range
+        //also store the value and its matching value as the best value for return so far
         return helper(
           range.slice(i + 1, i + 1 + range.slice(i + 1).indexOf(t - value)),
           t,
@@ -50,11 +40,13 @@ function sumPairs(ints, s) {
       }
       i++;
     }
+    //if no better values found in the iteration of the for loop it will return the previous stored value
     return stored;
   }
+  //trigger the recursive function with undefined as the initial stored value
   return helper(ints, s, undefined);
 }
-console.log(sumPairs([10, 5, 2, 3, 7, 5], 10));
+// console.log(sumPairs([10, 5, 2, 3, 7, 5], 10));
 // console.log(sumPairs([1, -2, 3, 0, -6, 1], -6));
 
 // console.log(sumPairs([0, 2, 0], 0));
