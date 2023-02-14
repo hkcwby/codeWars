@@ -50,3 +50,13 @@ function recursionSumPairs(ints, s) {
 // console.log(sumPairs([1, -2, 3, 0, -6, 1], -6));
 
 // console.log(sumPairs([0, 2, 0], 0));
+
+//a refactored solution that checks numbers against retrospective list of previous values instead
+//looking backwards removes the need for a recursive check step
+function refactoredSumPairs(ints, s) {
+  let seen = {};
+  for (var i = 0; i < ints.length; ++i) {
+    if (seen[s - ints[i]]) return [s - ints[i], ints[i]];
+    seen[ints[i]] = true;
+  }
+}
