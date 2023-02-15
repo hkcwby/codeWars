@@ -38,3 +38,17 @@ console.log(add("123", "321"));
 console.log(add("11", "99"));
 
 console.log(add("1372", "69"));
+// a refactored version I need to study to utilise reduceRight
+refactoredAdd = (
+  a,
+  b,
+  c = (a) => ("0".repeat(150) + a).slice(-150),
+  d = c(a),
+  e = c(b)
+) =>
+  [...e]
+    .reduceRight(
+      ([a, b], c, e) => [((f = +c + +d[e] + b) % 10) + a, (f / 10) | 0],
+      ["", 0]
+    )[0]
+    .replace(/^0+/, "");
