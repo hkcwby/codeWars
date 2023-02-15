@@ -50,18 +50,18 @@ function nextBigger(n) {
   const values = n.toString().split("").reverse();
 
   const mapped = values.map((value, index) => value > values[index + 1]);
-
+  //check if there is actually a solution and if not return -1
   if (mapped.indexOf(true) < 0) return -1;
+  //if there is a solution find the point at which a change can be made
   let turnPoint = mapped.indexOf(true) + 2;
+  //need to manipulate as a string in order to perform the operation and need its length
   let length = n.toString().length;
+  //the hopefully larger section of the number we do not need to modify after the turningPoint
   let keep = n.toString().substring(0, length - turnPoint);
+  //digits to process before the turningPoint
   let change = n.toString().substring(length - turnPoint, length);
-  //   console.log(length);
-  //   console.log(turnPoint);
-  //   console.log(length - turnPoint);
-  //   console.log(keep);
-  //   console.log(change);
   let changeArray = change.split("");
+  //determine the best digit to lead, which is the smallest digit larger than the current leading value
   let best =
     Number(
       changeArray
@@ -69,19 +69,10 @@ function nextBigger(n) {
         .filter((value) => value > 0)
         .reduce((a, b) => Math.min(a, b), 10)
     ) + Number(changeArray[0]);
-  //   console.log(best);
-  //   console.log(changeArray);
-  //   console.log(changeArray.indexOf(String(best)));
+  //splice the best leading digit from the array
   const lead = changeArray.splice(changeArray.indexOf(String(best)), 1);
-  //   console.log(lead);
-  //   console.log(changeArray);
+  //return the kept values appending the lead value followed by the remainging values sorted to produce the lowest possible base ten number
   return Number(keep + lead + changeArray.sort().join(""));
-
-  //   return Number(
-  //     keep +
-  //       change[1] +
-  //       String((change[0] + change.substring(2)).split("").sort().join(""))
-  //   );
 }
 
 // console.log(nextBigger(513));
@@ -90,5 +81,5 @@ function nextBigger(n) {
 // console.log(nextBigger(9876543210));
 // console.log(nextBigger(144));
 // console.log(nextBigger(143));
-console.log(nextBigger(59884848459853));
+//console.log(nextBigger(59884848459853));
 // 59884848493558 to equal 59884848483559
