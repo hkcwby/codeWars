@@ -4,15 +4,13 @@
 // After ordering these strings in dictionary order, return the middle term.
 // (If the sequence has a even length n, define its middle term to be the (n/2)th term.)
 
-function middlePermutation(s) {
+function bruteForceMiddlePermutation(s) {
   const store = [];
   let counter = 0;
   const searchNum = s
     .split("")
     .map((item, index) => index + 1)
     .reduce((a, b) => a * b);
-  // console.log(searchNum) / 2;
-
   function helper(current, remainder) {
     counter += 1;
     if (remainder.length == 0) {
@@ -26,14 +24,38 @@ function middlePermutation(s) {
     }
   }
   helper("", s.split(""));
-  //console.log(store);
-  //console.log(store.map((item) => item.join("")));
   const sorted = store.map((item) => item.join("")).sort();
-  // console.log(sorted);
   return sorted.length % 2
     ? sorted[(sorted.length + 1) / 2 - 1]
     : sorted[sorted.length / 2 - 1];
 }
+
+// ab
+// bac
+// bdca
+// cbeda
+// cfedba
+// dcgfeba
+// dhgfecba
+// edihgfcba
+// ejihgfdcba
+//found a solution following a pattern
+
+//halfway value is reverse of the sorted values with either the mid value(s) moved to the front
+function middlePermutation(s) {
+  let data = s.split("").sort().reverse();
+
+  if (data.length % 2) {
+    return (
+      data.splice(data.length - data.length / 2, 2).join("") + data.join("")
+    );
+  } else {
+    return (
+      data.splice(data.length - data.length / 2, 1).join("") + data.join("")
+    );
+  }
+}
+
 console.log(middlePermutation("ab"));
 console.log(middlePermutation("abc"));
 console.log(middlePermutation("abcd"));
