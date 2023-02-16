@@ -11,7 +11,7 @@ function middlePermutation(s) {
     .split("")
     .map((item, index) => index + 1)
     .reduce((a, b) => a * b);
-  console.log(searchNum) / 2;
+  // console.log(searchNum) / 2;
 
   function helper(current, remainder) {
     counter += 1;
@@ -27,15 +27,19 @@ function middlePermutation(s) {
   }
   helper("", s.split(""));
   //console.log(store);
-  console.log(store.map((item) => item.join("")));
+  //console.log(store.map((item) => item.join("")));
   const sorted = store.map((item) => item.join("")).sort();
-  console.log(sorted);
+  // console.log(sorted);
   return sorted.length % 2
     ? sorted[(sorted.length + 1) / 2 - 1]
     : sorted[sorted.length / 2 - 1];
 }
-
-console.log(middlePermutation("abcdxg"));
+console.log(middlePermutation("ab"));
 console.log(middlePermutation("abc"));
 console.log(middlePermutation("abcd"));
-console.log(middlePermutation("abcdx"));
+console.log(middlePermutation("abcde"));
+console.log(middlePermutation("abcdef"));
+console.log(middlePermutation("abcdefg"));
+console.log(middlePermutation("abcdefgh"));
+console.log(middlePermutation("abcdefghi"));
+console.log(middlePermutation("abcdefghij"));
