@@ -17,16 +17,37 @@ function nextSmaller(n) {
   console.log(check);
   if (check < 0) return -1;
 
-  let modify = process.splice(0, check + 2).sort();
-  console.log(modify);
+  const modify = process.splice(0, check + 2);
+  const turningPoint = modify[modify.length - 1];
+  // console.log(turningPoint);
+  const best = modify.indexOf(
+    String(
+      modify
+        .map((value) => value - turningPoint)
+        .filter((value) => value < 0)
+        .reduce((a, b) => Math.max(a, b), -10) + Number(turningPoint)
+    )
+  );
+  // console.log(modify);
+  // console.log(best);
+  console.log(modify.map((value) => value - turningPoint));
+  const lead = modify.splice(best, 1);
+  // console.log(lead);
+  // console.log(modify);
+  // console.log(process);
+  const output = process.reverse().concat(lead, modify.reverse()).join("");
 
-  [modify[check], modify[check + 1]] = [modify[check + 1], modify[check]];
-  console.log(modify);
+  return Number(output[0]) ? Number(output) : -1;
 
-  return Number(modify.concat(process).reverse().join(""));
+  // [modify[check], modify[check + 1]] = [modify[check + 1], modify[check]];
+  // console.log(modify);
+
+  //return Number(modify.concat(process).reverse().join(""));
 }
 
-console.log(nextSmaller(21));
-console.log(nextSmaller(907));
-console.log(nextSmaller(531));
+// console.log(nextSmaller(21));
+//console.log(nextSmaller(907));
+// console.log(nextSmaller(531));
+// console.log(nextSmaller(414));
+console.log(nextSmaller(1027));
 // nextSmaller(8454231);
