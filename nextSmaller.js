@@ -47,3 +47,11 @@ function nextSmaller(n) {
 // console.log(nextSmaller(414));
 //console.log(nextSmaller(1207));
 // nextSmaller(8454231);
+
+const refactorNextSmaller = (n) => {
+  let min = minify(n);
+  while (--n >= min) if (minify(n) === min) return n;
+  return -1;
+};
+
+const minify = (n) => [...`${n}`].sort().join``.replace(/^(0+)([1-9])/, "$2$1");
