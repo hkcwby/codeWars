@@ -5,7 +5,7 @@
 // The knight is not allowed to move off the board. The board is 8x8.
 
 //a solution that is too time intensive
-function knight(start, finish) {
+function bruteKnight(start, finish) {
   //breaking down the input data into a numeric set of coordinates
   const positions = ["a", "b", "c", "d", "e", "f", "g", "h"];
   const startColumn = positions.indexOf(start[0]) + 1;
@@ -49,3 +49,35 @@ function knight(start, finish) {
   //we have various solutions but we want to return the minimum moves
   return Math.min(...output);
 }
+
+//solution using map of known distances
+
+function knight(start, finish) {
+  //map of moves from a corner
+  let map = [
+    0, 3, 2, 3, 2, 3, 4, 5, 3, 2, 1, 2, 3, 4, 3, 4, 2, 1, 4, 3, 2, 3, 4, 5, 3,
+    2, 3, 2, 3, 4, 3, 4, 2, 3, 2, 3, 4, 3, 4, 5, 3, 4, 3, 4, 3, 4, 5, 4, 4, 3,
+    4, 3, 4, 5, 4, 5, 5, 4, 5, 4, 5, 4, 5, 6,
+  ];
+  //the distance from start to finish
+  let diff =
+    Math.abs(finish.charCodeAt(0) - start.charCodeAt(0)) * 8 +
+    Math.abs(finish.charCodeAt(1) - start.charCodeAt(1));
+  //checking for corner
+  if (
+    diff === 9 &&
+    (parseInt(start[1]) === 1 || parseInt(start[1]) === 8) &&
+    (start[0] === "a" || start[0] === "h")
+  )
+    return 4; // corner case 1
+  if (
+    diff === 9 &&
+    (parseInt(finish[1]) === 1 || parseInt(finish[1]) === 8) &&
+    (finish[0] === "a" || finish[0] === "h")
+  )
+    return 4; // corner case 2
+  //if the corner cases do not apply then the distance follows a set pattern as per the map
+  return map[diff];
+}
+
+console.log(knight("a1", "b1"));
