@@ -4,12 +4,15 @@
 
 // The knight is not allowed to move off the board. The board is 8x8.
 
+//a solution that is too time intensive
 function knight(start, finish) {
+  //breaking down the input data into a numeric set of coordinates
   const positions = ["a", "b", "c", "d", "e", "f", "g", "h"];
   const startColumn = positions.indexOf(start[0]) + 1;
   const startRow = Number(start[1]);
   const finColumn = positions.indexOf(finish[0]) + 1;
   const finRow = Number(finish[1]);
+  //all possible movement vectors for a single space
   const moves = [
     [2, -1],
     [2, 1],
@@ -20,82 +23,29 @@ function knight(start, finish) {
     [-1, -2],
     [1, -2],
   ];
-
   const output = [];
 
-  function helper(row, col, targetRow, targetCol, step, visits) {
-    let localVisits = [...visits];
-    console.log(row, col, targetRow, targetCol, step);
+  //a helper function that enables brute forcing
+  function helper(row, col, targetRow, targetCol, step) {
+    //no distance should ever exceed 6 moves
     if (step > 6) return;
-    if (visits.includes(String(row) + String(col))) return;
-    if (row > 8 || row < 1 || col > 8 || col < 1) return;
-
-    console.log(row, col, targetRow, targetCol, step);
-    localVisits.push(String(row) + String(col));
-    console.log(visits);
-    console.log(output);
-    console.log(row == targetRow, col == targetCol);
-    if (row == targetRow && col == targetCol) return step;
-    else {
-      const nextStep = step + 1;
-      moves.forEach((set) =>
-        helper(
-          row + set[0],
-          col + set[1],
-          targetRow,
-          targetCol,
-          nextStep,
-          localVisits
-        )
-      );
+    //moves that land outside the chess board are invalid
+    if (row > 8 || row < 1 || col > 8 || col < 1) {
+      return;
+    } else {
+      //if the new position matches the target store the number of moves in output
+      if (row == targetRow && col == targetCol) output.push(step);
+      //otherwise call the helper iteratively for each move in the move vector recursively
+      else {
+        const nextStep = step + 1;
+        moves.forEach((set) =>
+          helper(row + set[0], col + set[1], targetRow, targetCol, nextStep)
+        );
+      }
     }
   }
-
-  return helper(startRow, startColumn, finRow, finColumn, 0, []);
-  //return Math.min(...output);
-  //return output;
+  //call the initial helper function using the start values
+  helper(startRow, startColumn, finRow, finColumn, 0);
+  //we have various solutions but we want to return the minimum moves
+  return Math.min(...output);
 }
-
-console.log(knight("a8", "b5"));
-
-//a solution that is too time intensive
-// function knight(start, finish) {
-//   console.log(start,finish);
-//   const positions = ["a", "b", "c", "d", "e", "f", "g", "h"];
-//   const startColumn = positions.indexOf(start[0]) + 1;
-//   const startRow = Number(start[1]);
-//   const finColumn = positions.indexOf(finish[0]) + 1;
-//   const finRow = Number(finish[1]);
-//   const moves = [
-//     [2, -1],
-//     [2, 1],
-//     [1, 2],
-//     [-1, 2],
-//     [-2, 1],
-//     [-2, -1],
-//     [-1, -2],
-//     [1, -2],
-//   ];
-//   const output = [];
-//   const visited = [];
-
-//   function helper(row, col, targetRow, targetCol, step) {
-
-//     if (step > 6) return;
-//     if (row > 8 || row < 1 || col > 8 || col < 1) {
-
-//     } else {
-
-//       if (row == targetRow && col == targetCol) output.push(step);
-//       else {
-//         const nextStep = step + 1;
-//         moves.forEach((set) =>
-//           helper(row + set[0], col + set[1], targetRow, targetCol, nextStep)
-//         );
-//       }
-//     }
-//   }
-
-//   helper(startRow, startColumn, finRow, finColumn, 0);
-//   return Math.min(...output);
-// }
